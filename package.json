@@ -2,8 +2,18 @@
   "dependencies": {
     "react-native-animated-math": "^0.1.0"
   },
+  "keywords": [
+    "loop",
+    "infinite",
+    "scroll",
+    "react",
+    "react-native",
+    "react-native-web",
+    "carousel",
+    "enum"
+  ],
   "name": "react-native-rotary",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "🕰️  A <Rotary /> component for React Native.",
   "main": "index.js",
   "repository": "https://github.com/cawfree/react-native-rotary",
