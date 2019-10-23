@@ -91,6 +91,7 @@ index|number|0|No|The currently focused index.
 onIndexChanged|func|(index) => null|No|Callback for when the index has changed.
 duration|number|300|No|The animation duration when rendered items are realigned.
 boost|number|3|No|The amount to scale focused items, compared to its nearest siblings.
+minSwipe|number|0|No|The minimum amount of distance to drag before rotating.
 
 ## ✌️ License
 [MIT]()
