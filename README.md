@@ -1,6 +1,10 @@
 # 🕰️  react-native-rotary
 A `<Rotary />` component for React Native, compatible with Android, iOS and Web, powered by [react-native-animated-math](https://github.com/rastapasta/react-native-animated-math).
 
+<p align="center">
+  <img src="./bin/out.gif" width="398" height="266">
+</p>
+
 This project supports [Semantic Versioning](https://docs.npmjs.com/about-semantic-versioning).
 
 ## 🚀 Getting Started
