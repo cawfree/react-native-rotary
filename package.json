@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "react-native-animated-math": "^0.1.0"
+  },
+  "name": "react-native-rotary",
+  "version": "0.0.1",
+  "description": "🕰️  A <Rotary /> component for React Native.",
+  "main": "index.js",
+  "repository": "https://github.com/cawfree/react-native-rotary",
+  "author": "Alex Thomas (@cawfree) <hello@cawfree.com>",
+  "license": "MIT",
+  "private": false,
+  "devDependencies": {}
+}
