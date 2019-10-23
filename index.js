@@ -65,34 +65,8 @@ const Rotary = ({ radius, data, renderItem, index, onIndexChanged, duration, boo
         },
       )
   );
-  useEffect(
-    () => {
-      const curr = getIndex(animRotate, data);
-      if (index !== curr) {
-        animRotate.flattenOffset();
-        Animated
-          .timing(
-            animRotate,
-            {
-              toValue: -1 * index * Math.PI * 2 / data.length,
-              duration,
-              useNativeDriver: Platform.OS !== 'web',
-            },
-          )
-          .start();
-      }
-    },
-  );
-  return (
-    <Animated.View
-      {...panResponder.panHandlers}
-      style={{
-        width: radius * 2,
-        height: radius * 1.25,
-        overflow: 'hidden',
-      }}
-    >
-      {data.map(
+  const [ anim ] = useState(
+    data.map(
         (item, index, { length }) => {
           const offsetRotate = Animated
             .add(
@@ -169,7 +143,37 @@ const Rotary = ({ radius, data, renderItem, index, onIndexChanged, duration, boo
             </Animated.View>
           );
         }
-      )}
+      )
+  );
+  useEffect(
+    () => {
+      const curr = getIndex(animRotate, data);
+      if (index !== curr) {
+        animRotate.flattenOffset();
+        Animated
+          .timing(
+            animRotate,
+            {
+              toValue: -1 * index * Math.PI * 2 / data.length,
+              duration,
+              useNativeDriver: Platform.OS !== 'web',
+            },
+          )
+          .start();
+      }
+    },
+    [ index ],
+  );
+  return (
+    <Animated.View
+      {...panResponder.panHandlers}
+      style={{
+        width: radius * 2,
+        height: radius * 1.25,
+        overflow: 'hidden',
+      }}
+    >
+      {anim}
     </Animated.View>
   );
 };
