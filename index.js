@@ -30,7 +30,7 @@ const shouldRest = (animRotate, data, duration) => {
     );
 };
 
-const Rotary = ({ radius, data, renderItem, index, onIndexChanged, duration, boost, minSwipe, ...extraProps }) => {
+const Rotary = ({ radius, data, renderItem, index, onIndexChanged, duration, boost, minSwipe, style, ...extraProps }) => {
   const [ animRotate ] = useState(
     new Animated.Value(
       -1 * index * Math.PI * 2 / data.length,
@@ -167,11 +167,16 @@ const Rotary = ({ radius, data, renderItem, index, onIndexChanged, duration, boo
   return (
     <Animated.View
       {...panResponder.panHandlers}
-      style={{
-        width: radius * 2,
-        height: radius * 1.25,
-        overflow: 'hidden',
-      }}
+      style={[
+        {
+          overflow: 'hidden',
+        },
+        style,
+        {
+          width: radius * 2,
+          height: radius * 1.25,
+        }
+      ]}
     >
       {anim}
     </Animated.View>
@@ -189,6 +194,7 @@ Rotary.propTypes = {
   duration: PropTypes.number,
   boost: PropTypes.number,
   minSwipe: PropTypes.number,
+  style: PropTypes.shape({}),
 };
 
 Rotary.defaultProps = {
@@ -200,6 +206,7 @@ Rotary.defaultProps = {
   duration: 300,
   boost: 3,
   minSwipe: 0,
+  style: {},
 };
 
 export default Rotary;
