@@ -168,9 +168,6 @@ const Rotary = ({ radius, data, renderItem, index, onIndexChanged, duration, boo
     <Animated.View
       {...panResponder.panHandlers}
       style={[
-        {
-          overflow: 'hidden',
-        },
         style,
         {
           width: radius * 2,
@@ -206,7 +203,9 @@ Rotary.defaultProps = {
   duration: 300,
   boost: 3,
   minSwipe: 0,
-  style: {},
+  style: {
+    overflow: 'hidden',
+  },
 };
 
 export default Rotary;
