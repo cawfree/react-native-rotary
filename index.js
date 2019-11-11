@@ -30,7 +30,7 @@ const shouldRest = (animRotate, data, duration) => {
     );
 };
 
-const Rotary = ({ radius, data, renderItem, index, onIndexChanged, duration, boost, minSwipe, style, ...extraProps }) => {
+const Rotary = ({ radius, data, renderItem, index, onIndexChanged, duration, minSwipe, style, ...extraProps }) => {
   const [ animRotate ] = useState(
     new Animated.Value(
       -1 * index * Math.PI * 2 / data.length,
@@ -73,26 +73,23 @@ const Rotary = ({ radius, data, renderItem, index, onIndexChanged, duration, boo
               animRotate,
               Math.PI,
             );
-          const scale = AnimatedMath.pow(
-            AnimatedMath
-              .sinus(
-                Animated.diffClamp(
-                  Animated.modulo(
+          const scale = AnimatedMath
+            .sinus(
+              Animated.diffClamp(
+                Animated.modulo(
+                  Animated.add(
                     Animated.add(
-                      Animated.add(
-                        offsetRotate,
-                        -1 * Math.PI / 2,
-                      ),
-                      index / length * 2 * Math.PI,
+                      offsetRotate,
+                      -1 * Math.PI / 2,
                     ),
-                    Math.PI * 2,
+                    index / length * 2 * Math.PI,
                   ),
-                  -radius,
-                  radius,
+                  Math.PI * 2,
                 ),
+                -radius,
+                radius,
               ),
-            boost,
-          );
+            );
           return (
             <Animated.View
               key={index}
@@ -113,7 +110,7 @@ const Rotary = ({ radius, data, renderItem, index, onIndexChanged, duration, boo
                                 ),
                             ),
                         ),
-                        radius * 0.75,
+                        radius * 0.5,
                       )},
                   { translateY: Animated
                       .add(
@@ -128,14 +125,9 @@ const Rotary = ({ radius, data, renderItem, index, onIndexChanged, duration, boo
                                 ),
                             ),
                         ),
-                        radius * 0.75 * 1.65,
+                        radius,
                       )},
-                  { scale: Animated
-                    .multiply(
-                      scale,
-                      2,
-                    )
-                  },
+                  { scale }
                 ],
               }}
             >
@@ -171,7 +163,7 @@ const Rotary = ({ radius, data, renderItem, index, onIndexChanged, duration, boo
         style,
         {
           width: radius * 2,
-          height: radius * 1.25,
+          height: radius,
         }
       ]}
     >
@@ -189,7 +181,6 @@ Rotary.propTypes = {
   index: PropTypes.number,
   onIndexChanged: PropTypes.func,
   duration: PropTypes.number,
-  boost: PropTypes.number,
   minSwipe: PropTypes.number,
   style: PropTypes.shape({}),
 };
@@ -201,7 +192,6 @@ Rotary.defaultProps = {
   index: 0,
   onIndexChanged: (index) => null,
   duration: 300,
-  boost: 3,
   minSwipe: 0,
   style: {
     overflow: 'hidden',

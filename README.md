@@ -33,7 +33,7 @@ This component emulates the configuration of a [`<FlatList />`](https://facebook
 import React, { useState } from 'react';
 import { View, StyleSheet, Image } from 'react-native';
 import Rotary from 'react-native-rotary';
-
+ 
 export default () => {
   // You can define an initial index offset, and render arbitrary child elements.
   const [ index, setIndex ] = useState(1);
@@ -53,19 +53,34 @@ export default () => {
         radius={100}
         data={data}
         renderItem={({ item: uri, index }) => (
-          <Image
+          <View
             style={{
-              width: 50,
-              height: 50,
+              width: 100,
+              height: 100,
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
-            source={{ uri }}
-          />
+          >
+            <Image
+              style={{
+                width: 80,
+                height: 80,
+              }}
+              source={{ uri }}
+            />
+          </View>
         )}
+      />
+      <View
+        style={{
+          width: 50,
+          height: 50,
+        }}
       />
     </View>
   );
 };
-
+ 
 const data = [
   'https://mondrian.mashable.com/uploads%252Fcard%252Fimage%252F929108%252F46c9313d-32d0-4da8-8d41-f5e50936a926.png%252Ffull-fit-in__950x534.png?signature=_R0yeIihD3oDvF1bulncd718gR0=&source=https%3A%2F%2Fblueprint-api-production.s3.amazonaws.com',
   'https://cdn-01.independent.ie/incoming/article34131003.ece/bcec2/AUTOCROP/w620/Hugging%20Face.png',
@@ -76,7 +91,6 @@ const data = [
   'https://cdn.shopify.com/s/files/1/1061/1924/products/Face_with_Cold_Sweat_Emoji_grande.png?v=1480481052',
   'https://www.dictionary.com/e/wp-content/uploads/2018/03/Upside-Down_Face_Emoji.png',
 ];
-
 ```
 
 ## 📌 Props
@@ -90,7 +104,6 @@ renderItem|func|({ item, index }) => null|No|A function to render an item from `
 index|number|0|No|The currently focused index.
 onIndexChanged|func|(index) => null|No|Callback for when the index has changed.
 duration|number|300|No|The animation duration when rendered items are realigned.
-boost|number|3|No|The amount to scale focused items, compared to its nearest siblings.
 minSwipe|number|0|No|The minimum amount of distance to drag before rotating.
 style|object|0|No|Additional styling.
 
