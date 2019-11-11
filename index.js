@@ -30,7 +30,7 @@ const shouldRest = (animRotate, data, duration) => {
     );
 };
 
-const Rotary = ({ radius, data, renderItem, index, onIndexChanged, duration, minSwipe, style, ...extraProps }) => {
+const Rotary = ({ radius, data, renderItem, index, onIndexChanged, duration, style, ...extraProps }) => {
   const [ animRotate ] = useState(
     new Animated.Value(
       -1 * index * Math.PI * 2 / data.length,
@@ -40,8 +40,7 @@ const Rotary = ({ radius, data, renderItem, index, onIndexChanged, duration, min
     PanResponder
       .create(
         {
-          onStartShouldSetPanResponder: () => false,
-          onMoveShouldSetPanResponder: (e, { dx }) => Math.abs(dx) > minSwipe,
+          onStartShouldSetPanResponder: () => true,
           onPanResponderTerminationRequest: () => false,
           onShouldBlockNativeResponder: () => true,
           onPanResponderGrant: (evt, gestureState) => {
@@ -181,7 +180,6 @@ Rotary.propTypes = {
   index: PropTypes.number,
   onIndexChanged: PropTypes.func,
   duration: PropTypes.number,
-  minSwipe: PropTypes.number,
   style: PropTypes.shape({}),
 };
 
@@ -192,7 +190,6 @@ Rotary.defaultProps = {
   index: 0,
   onIndexChanged: (index) => null,
   duration: 300,
-  minSwipe: 0,
   style: {
     overflow: 'hidden',
   },
