@@ -40,9 +40,9 @@ const Rotary = ({ radius, data, renderItem, index, onIndexChanged, duration, sty
     PanResponder
       .create(
         {
-          onStartShouldSetPanResponder: () => !disabled,
+          onStartShouldSetPanResponder: () => true,
           onPanResponderTerminationRequest: () => false,
-          onShouldBlockNativeResponder: () => !disabled,
+          onShouldBlockNativeResponder: () => true,
           onPanResponderGrant: (evt, gestureState) => {
             animRotate.extractOffset();
           },
@@ -155,10 +155,14 @@ const Rotary = ({ radius, data, renderItem, index, onIndexChanged, duration, sty
     },
     [ index ],
   );
+  const conditionalProps = (!disabled) ? (
+    {
+      ...panResponder.panHandlers,
+    }
+  ) : {};
   return (
     <Animated.View
-      pointerEvents={disabled ? 'box-none' : 'auto'}
-      {...panResponder.panHandlers}
+      {...conditionalProps}
       style={[
         style,
         {

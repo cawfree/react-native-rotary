@@ -13,7 +13,7 @@
     "enum"
   ],
   "name": "react-native-rotary",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "🕰️  A <Rotary /> component for React Native.",
   "main": "index.js",
   "repository": "https://github.com/cawfree/react-native-rotary",
