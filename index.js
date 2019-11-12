@@ -30,7 +30,7 @@ const shouldRest = (animRotate, data, duration) => {
     );
 };
 
-const Rotary = ({ radius, data, renderItem, index, onIndexChanged, duration, style, ...extraProps }) => {
+const Rotary = ({ radius, data, renderItem, index, onIndexChanged, duration, style, disabled, ...extraProps }) => {
   const [ animRotate ] = useState(
     new Animated.Value(
       -1 * index * Math.PI * 2 / data.length,
@@ -40,9 +40,9 @@ const Rotary = ({ radius, data, renderItem, index, onIndexChanged, duration, sty
     PanResponder
       .create(
         {
-          onStartShouldSetPanResponder: () => true,
+          onStartShouldSetPanResponder: () => !disabled,
           onPanResponderTerminationRequest: () => false,
-          onShouldBlockNativeResponder: () => true,
+          onShouldBlockNativeResponder: () => !disabled,
           onPanResponderGrant: (evt, gestureState) => {
             animRotate.extractOffset();
           },
@@ -181,6 +181,7 @@ Rotary.propTypes = {
   onIndexChanged: PropTypes.func,
   duration: PropTypes.number,
   style: PropTypes.shape({}),
+  disabled: PropTypes.bool,
 };
 
 Rotary.defaultProps = {
@@ -193,6 +194,7 @@ Rotary.defaultProps = {
   style: {
     overflow: 'hidden',
   },
+  disabled: false,
 };
 
 export default Rotary;

@@ -106,6 +106,7 @@ onIndexChanged|func|(index) => null|No|Callback for when the index has changed.
 duration|number|300|No|The animation duration when rendered items are realigned.
 minSwipe|number|0|No|The minimum amount of distance to drag before rotating.
 style|object|0|No|Additional styling.
+disabled|bool|false|No|Prevent manual scrolling.
 
 ## ✌️ License
 [MIT]()
