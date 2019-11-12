@@ -157,6 +157,7 @@ const Rotary = ({ radius, data, renderItem, index, onIndexChanged, duration, sty
   );
   return (
     <Animated.View
+      pointerEvents={disabled ? 'box-none' : 'auto'}
       {...panResponder.panHandlers}
       style={[
         style,
