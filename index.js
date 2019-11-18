@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Platform, Animated, PanResponder } from 'react-native';
+import { View, Platform, Animated, PanResponder } from 'react-native';
 import AnimatedMath from 'react-native-animated-math';
 
 const getIndex = (animRotate, data) => {
@@ -171,7 +171,13 @@ const Rotary = ({ radius, data, renderItem, index, onIndexChanged, duration, sty
         }
       ]}
     >
-      {anim}
+      <View
+        style={{
+          marginLeft: -0.125 * radius,
+        }}
+      >
+        {anim}
+      </View>
     </Animated.View>
   );
 };
