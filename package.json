@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "react-native-animated-math": "^0.1.0"
+    "react-native-animated-math": "^0.3.1"
   },
   "keywords": [
     "loop",
@@ -15,10 +15,23 @@
   "name": "react-native-rotary",
   "version": "0.1.5",
   "description": "🕰️  A <Rotary /> component for React Native.",
-  "main": "index.js",
+  "main": "dist",
+  "scripts": {
+    "build": "yarn ; babel src --out-dir dist ; rm -rf node_modules"
+  },
   "repository": "https://github.com/cawfree/react-native-rotary",
   "author": "Alex Thomas (@cawfree) <hello@cawfree.com>",
   "license": "MIT",
   "private": false,
-  "devDependencies": {}
+  "devDependencies": {
+    "@babel/cli": "^7.11.6",
+    "@babel/core": "^7.11.6",
+    "@babel/node": "^7.10.5",
+    "@babel/polyfill": "^7.11.5",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/preset-react": "^7.10.4",
+    "husky": "^4.3.0",
+    "jest": "^26.4.2",
+    "prettier": "^2.1.2"
+  }
 }
