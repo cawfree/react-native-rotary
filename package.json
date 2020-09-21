@@ -13,7 +13,7 @@
     "enum"
   ],
   "name": "react-native-rotary",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "🕰️  A <Rotary /> component for React Native.",
   "main": "dist",
   "scripts": {
