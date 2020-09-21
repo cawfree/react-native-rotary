@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { View, Platform, Animated, PanResponder } from 'react-native';
 import AnimatedMath from 'react-native-animated-math';
+import useDeepCompareEffect from 'use-deep-compare-effect';
 
 const getIndex = (animRotate, data) => {
   const dir = Math.sign(animRotate.__getValue());
@@ -31,13 +32,13 @@ const shouldRest = (animRotate, data, duration) => {
 };
 
 const Rotary = ({ radius, data, renderItem, index, onIndexChanged, duration, style, disabled, ...extraProps }) => {
-  const [ animRotate ] = useState(
-    new Animated.Value(
-      -1 * index * Math.PI * 2 / data.length,
-    ),
-  );
-  const [ panResponder ] = useState(
-    PanResponder
+
+  const createDefaultRotation = useCallback(() => new Animated.Value(-1 * index * Math.PI * 2 / data.length), []);
+  
+  const [animRotate] = useState(createDefaultRotation);
+
+  const createPanResponder = useCallback(
+    () => PanResponder
       .create(
         {
           onStartShouldSetPanResponder: () => true,
@@ -49,9 +50,7 @@ const Rotary = ({ radius, data, renderItem, index, onIndexChanged, duration, sty
           onPanResponderMove: (evt, gestureState) => {
             const { dx } = gestureState;
             const v = (dx / radius);
-            animRotate.setValue(
-              v,
-            );
+            animRotate.setValue(v);
           },
           onPanResponderRelease: (evt, gestureState) => {
             onIndexChanged(getIndex(animRotate, data));
@@ -62,11 +61,13 @@ const Rotary = ({ radius, data, renderItem, index, onIndexChanged, duration, sty
             shouldRest(animRotate, data, duration);
           },
         },
-      )
+      ),
+    [data, radius, duration],
   );
-  const [ anim ] = useState(
-    data.map(
-        (item, index, { length }) => {
+
+  const createAnimation = useCallback(
+    () => data.map(
+      (item, index, { length }) => {
           const offsetRotate = Animated
             .add(
               animRotate,
@@ -134,8 +135,24 @@ const Rotary = ({ radius, data, renderItem, index, onIndexChanged, duration, sty
             </Animated.View>
           );
         }
-      )
+      ),
+    [data],
   );
+
+  const [panResponder, setPanResponder] = useState(createPanResponder(animRotate));
+  const [anim, setAnim] = useState(createAnimation);
+
+  useDeepCompareEffect(
+    () => {
+      animRotate.setValue(-1 * index * Math.PI * 2 / data.length);
+      animRotate.flattenOffset();
+      animRotate.extractOffset();
+      setPanResponder(createPanResponder());
+      setAnim(createAnimation());
+    },
+    [data, setPanResponder, setAnim, createDefaultRotation, createPanResponder, createAnimation],
+  );
+
   useEffect(
     () => {
       const curr = getIndex(animRotate, data);
@@ -153,29 +170,17 @@ const Rotary = ({ radius, data, renderItem, index, onIndexChanged, duration, sty
           .start();
       }
     },
-    [ index ],
+    [index, animRotate, data, duration],
   );
-  const conditionalProps = (!disabled) ? (
-    {
-      ...panResponder.panHandlers,
-    }
+  const conditionalProps = !disabled ? (
+    { ...panResponder.panHandlers }
   ) : {};
   return (
     <Animated.View
       {...conditionalProps}
-      style={[
-        style,
-        {
-          width: radius * 2,
-          height: radius,
-        }
-      ]}
+      style={[style, { width: radius * 2, height: radius }]}
     >
-      <View
-        style={{
-          marginLeft: -0.125 * radius,
-        }}
-      >
+      <View style={{ marginLeft: -0.125 * radius }}>
         {anim}
       </View>
     </Animated.View>
